@@ -5,5 +5,6 @@ def call(Map config=[:]) {
     idTransition: "${config.id}"
   ]
   def render = renderTemplate(rawBody,binding)
-  sh('curl -x $URL_PROXY -D- -u $JIRA_CREDENTIALS -X POST --data "'+render+'" -H "Content-Type: application/json" $JIRA_URL/rest/api/2/issue/$key/transitions')
+  def issueId = binding[0]
+  sh('curl -x $URL_PROXY -D- -u $JIRA_CREDENTIALS -X POST --data "'+render+'" -H "Content-Type: application/json" $JIRA_URL/rest/api/2/issue/"'+issueId+'"/transitions')
 }
